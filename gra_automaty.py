@@ -5,9 +5,14 @@ import time
 #redcells = [10,21,2,12,22]
 #redcell = [21,22,31,32]
 #redcells = [12,22,32]
-redcells = [11,21,31,12,23]
+#redcells = [11,21,31,12,23]
+redcells = [27,37,47,28,39]
 allcells = []  
 wrong = [0,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,19,29,39,49,59,69,79,89,99,91,92,93,94,95,96,97,98]
+top_wrong = [0,10,20,30,40,50,60,70,80,90]
+right_wrong = [90,91,92,93,94,95,96,97,98,99]
+left_wrong = [0,1,2,3,4,5,6,7,8,9]
+bot_wrong = [9,19,29,39,49,59,69,79,89,99]
 S = [2,3]
 B = [3]
 class Cell():
@@ -19,35 +24,59 @@ class Cell():
         self.live = False
     def set_neighbours(self):
         try:
-            self.lefttop = allcells[self.id - 11].live
+            if self.id -11 in bot_wrong:
+                self.lefttop = False
+            else:
+                self.lefttop = allcells[self.id - 11].live
         except IndexError:
             self.lefttop = False
         try:
-            self.leftmid = allcells[self.id - 10].live
+            if self.id - 10 in right_wrong:
+                self.leftmid = False
+            else:
+                self.leftmid = allcells[self.id - 10].live
         except IndexError:
             self.leftmid = False
         try:
-            self.leftbot = allcells[self.id - 9].live
+            if self.id-9 in top_wrong:
+                self.leftbot = False
+            else:
+                self.leftbot = allcells[self.id - 9].live
         except IndexError:
             self.leftbot = False
         try:
-            self.midtop = allcells[self.id - 1].live
+            if self.id - 1 in bot_wrong:
+                self.midtop = False
+            else:
+                self.midtop = allcells[self.id - 1].live
         except IndexError:
             self.midtop = False
         try:
-            self.midbot = allcells[self.id + 1].live
+            if self.id + 1 in top_wrong:
+                self.midbot = False
+            else:
+                self.midbot = allcells[self.id + 1].live
         except IndexError:
             self.midbot = False
         try: 
-            self.righttop = allcells[self.id + 9].live
+            if self.id + 9 in bot_wrong:
+                self.righttop = False 
+            else:
+                self.righttop = allcells[self.id + 9].live
         except IndexError: 
             self.righttop = False
         try: 
-            self.rightmid = allcells[self.id + 10].live
+            if self.id + 10 in left_wrong:
+                self.rightmid = False
+            else:
+                self.rightmid = allcells[self.id + 10].live
         except IndexError:
             self.rightmid = False
         try: 
-            self.rightbot = allcells[self.id + 11].live
+            if self.id + 11 in top_wrong:
+                self.rightbot = False
+            else:
+                self.rightbot = allcells[self.id + 11].live
         except IndexError:
             self.rightbot = False
     
@@ -101,10 +130,6 @@ class Cell():
                     break
         if is_alive == False:
             self.change_to_dead()
-        
-        
-        
-
 def generate_fields():   
     iteration_id = 0
     for i in range(10):
@@ -118,8 +143,6 @@ def set_red_cells():
         if el.id in redcells:
             el.color = color.red
             el.live = True
-
-
 if __name__ == '__main__':
     generate_fields()
     set_red_cells()
